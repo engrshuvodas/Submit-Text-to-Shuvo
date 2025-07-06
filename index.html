@@ -1,37 +1,239 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Client Input Form</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Send Message</title>
+  <style>
+    :root {
+      --bg-color: #f4f7f8;
+      --text-color: #333;
+      --box-bg: white;
+      --input-bg: #fff;
+      --button-bg: #4CAF50;
+      --button-hover: #45a049;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --box-bg: #1e1e1e;
+      --input-bg: #2c2c2c;
+      --button-bg: #3cb371;
+      --button-hover: #2e8b57;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: var(--box-bg);
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      resize: vertical;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    button {
+      background-color: var(--button-bg);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--button-hover);
+    }
+
+    .toggle-theme {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        margin: 30px 15px;
+        padding: 25px 20px;
+      }
+
+      textarea {
+        font-size: 15px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .whatsapp-icon {
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: bounce 2s infinite;
+    }
+
+    .whatsapp-icon:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .whatsapp-tooltip {
+      margin-top: 6px;
+      font-size: 12px;
+      background-color: #333;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 10px;
+      opacity: 0.8;
+      white-space: nowrap;
+    }
+
+    [data-theme="dark"] .whatsapp-tooltip {
+      background-color: #ddd;
+      color: #111;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-6px);
+      }
+      60% {
+        transform: translateY(-3px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .whatsapp-icon {
+        width: 42px;
+        height: 42px;
+      }
+
+      .whatsapp-tooltip {
+        font-size: 11px;
+      }
+    }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
-  <h2>Type or Paste Your Message</h2>
-  <form action="https://formspree.io/f/xqaboyea" method="POST">
-    <textarea name="message" rows="12" cols="60" placeholder="Write here..." required></textarea><br><br>
-    <button type="submit" style="padding: 10px 20px; font-size: 16px;">Submit</button>
-  </form>
-  <p style="color: gray; margin-top: 20px;">No login required</p>
+<body>
+  <!-- Theme Toggle Button -->
+  <button class="toggle-theme" onclick="toggleTheme()">🌓</button>
 
+  <!-- Message Form -->
+  <div class="container">
+    <h2>📩 Type or Paste Your Message</h2>
 
+    <form action="https://formspree.io/f/xqaboyea" method="POST" id="messageForm">
+      <textarea name="message" rows="10" placeholder="Write here..." required></textarea>
+      <br>
+      <button type="submit">🚀 Submit</button>
+    </form>
+  </div>
 
-<!-- modify this form HTML and place wherever you want your form -->
-<!-- <form
-  action="https://formspree.io/f/xqaboyea"
-  method="POST"
->
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
+  <!-- WhatsApp Floating Button -->
+  <a
+    href="https://api.whatsapp.com/send/?phone=8801765245872&text=Hi%20there!%20I'm%20interested%20to%20know%20more%20about%20your%20services%20😊&type=phone_number&app_absent=0"
+    target="_blank"
+    class="whatsapp-float"
+    title="Chat with us on WhatsApp"
+  >
+    <div class="whatsapp-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="22px" height="22px">
+        <path
+          d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 .01 5.36.01 12c0 2.11.55 4.17 1.59 6.01L0 24l6.17-1.61A11.92 11.92 0 0012 24c6.63 0 12-5.37 12-12 0-3.2-1.24-6.21-3.48-8.52zM12 22c-1.91 0-3.79-.52-5.43-1.5l-.39-.23-3.65.96.98-3.55-.25-.4C2.53 15.24 2 13.64 2 12 2 6.48 6.48 2 12 2s10 4.48 10 10-4.48 10-10 10zm5.21-7.29l-2.46-.7a.62.62 0 00-.58.16l-.9.93a9.29 9.29 0 01-4.18-4.18l.93-.9a.61.61 0 00.16-.58l-.7-2.46a.63.63 0 00-.6-.44h-2a.62.62 0 00-.63.63c0 5.05 4.1 9.15 9.15 9.15.34 0 .63-.28.63-.63v-2a.62.62 0 00-.44-.6z"
+        />
+      </svg>
+    </div>
+    <div class="whatsapp-tooltip">Chat with us</div>
+  </a>
 
-  <button type="submit">Send</button>
-</form> -->
+  <!-- Scripts -->
+  <script>
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute("data-theme");
+      const newTheme = current === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    }
 
+    (function () {
+      const savedTheme = localStorage.getItem("theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    })();
 
+    // Redirect after successful form submit
+    document.getElementById("messageForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
 
+      fetch(form.action, {
+        method: "POST",
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          window.location.href = "thankyou.html";
+        } else {
+          alert("There was a problem submitting your message. Please try again.");
+        }
+      }).catch(error => {
+        alert("Error occurred!");
+      });
+    });
+  </script>
 </body>
 </html>
