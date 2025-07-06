@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,7 +48,7 @@
       padding: 15px;
       border-radius: 8px;
       border: 1px solid #ccc;
-      font-size: 16px;
+      font-size: 1rem;
       background-color: var(--input-bg);
       color: var(--text-color);
       resize: vertical;
@@ -61,7 +60,7 @@
       color: white;
       border: none;
       padding: 12px 25px;
-      font-size: 16px;
+      font-size: 1rem;
       border-radius: 6px;
       cursor: pointer;
       margin-top: 15px;
@@ -73,29 +72,17 @@
     }
 
     .toggle-theme {
-      position: absolute;
+      position: fixed;
       top: 20px;
       right: 20px;
+      left: auto;
+      margin: 0;
       background: none;
       border: none;
       font-size: 20px;
       cursor: pointer;
       color: var(--text-color);
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        margin: 30px 15px;
-        padding: 25px 20px;
-      }
-
-      textarea {
-        font-size: 15px;
-      }
-
-      button {
-        width: 100%;
-      }
+      z-index: 999;
     }
 
     .whatsapp-float {
@@ -156,7 +143,20 @@
       }
     }
 
-    @media (max-width: 480px) {
+    @media screen and (max-width: 768px) {
+      .container {
+        margin: 30px 20px;
+        padding: 30px 20px;
+      }
+
+      textarea {
+        font-size: 1rem;
+      }
+
+      button {
+        width: 100%;
+      }
+
       .whatsapp-icon {
         width: 42px;
         height: 42px;
@@ -164,6 +164,29 @@
 
       .whatsapp-tooltip {
         font-size: 11px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .container h2 {
+        font-size: 1.3rem;
+      }
+
+      textarea {
+        font-size: 0.95rem;
+        padding: 12px;
+      }
+
+      button {
+        font-size: 0.95rem;
+        padding: 10px 20px;
+      }
+
+      .toggle-theme {
+        top: 15px;
+        right: 15px;
+        left: auto !important;
+        font-size: 18px;
       }
     }
   </style>
@@ -175,7 +198,6 @@
   <!-- Message Form -->
   <div class="container">
     <h2>📩 Type or Paste Your Message</h2>
-
     <form action="https://formspree.io/f/xqaboyea" method="POST" id="messageForm">
       <textarea name="message" rows="10" placeholder="Write here..." required></textarea>
       <br>
@@ -184,17 +206,10 @@
   </div>
 
   <!-- WhatsApp Floating Button -->
-  <a
-    href="https://api.whatsapp.com/send/?phone=8801765245872&text=Hi%20there!%20I'm%20interested%20to%20know%20more%20about%20your%20services%20😊&type=phone_number&app_absent=0"
-    target="_blank"
-    class="whatsapp-float"
-    title="Chat with us on WhatsApp"
-  >
+  <a href="https://api.whatsapp.com/send/?phone=8801765245872&text=Hi%20there!%20I'm%20interested%20to%20know%20more%20about%20your%20services%20😊&type=phone_number&app_absent=0" target="_blank" class="whatsapp-float" title="Chat with us on WhatsApp">
     <div class="whatsapp-icon">
       <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" width="22px" height="22px">
-        <path
-          d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 .01 5.36.01 12c0 2.11.55 4.17 1.59 6.01L0 24l6.17-1.61A11.92 11.92 0 0012 24c6.63 0 12-5.37 12-12 0-3.2-1.24-6.21-3.48-8.52zM12 22c-1.91 0-3.79-.52-5.43-1.5l-.39-.23-3.65.96.98-3.55-.25-.4C2.53 15.24 2 13.64 2 12 2 6.48 6.48 2 12 2s10 4.48 10 10-4.48 10-10 10zm5.21-7.29l-2.46-.7a.62.62 0 00-.58.16l-.9.93a9.29 9.29 0 01-4.18-4.18l.93-.9a.61.61 0 00.16-.58l-.7-2.46a.63.63 0 00-.6-.44h-2a.62.62 0 00-.63.63c0 5.05 4.1 9.15 9.15 9.15.34 0 .63-.28.63-.63v-2a.62.62 0 00-.44-.6z"
-        />
+        <path d="M20.52 3.48A11.93 11.93 0 0012 0C5.37 0 .01 5.36.01 12c0 2.11.55 4.17 1.59 6.01L0 24l6.17-1.61A11.92 11.92 0 0012 24c6.63 0 12-5.37 12-12 0-3.2-1.24-6.21-3.48-8.52zM12 22c-1.91 0-3.79-.52-5.43-1.5l-.39-.23-3.65.96.98-3.55-.25-.4C2.53 15.24 2 13.64 2 12 2 6.48 6.48 2 12 2s10 4.48 10 10-4.48 10-10 10zm5.21-7.29l-2.46-.7a.62.62 0 00-.58.16l-.9.93a9.29 9.29 0 01-4.18-4.18l.93-.9a.61.61 0 00.16-.58l-.7-2.46a.63.63 0 00-.6-.44h-2a.62.62 0 00-.63.63c0 5.05 4.1 9.15 9.15 9.15.34 0 .63-.28.63-.63v-2a.62.62 0 00-.44-.6z"/>
       </svg>
     </div>
     <div class="whatsapp-tooltip">Chat with us</div>
@@ -214,7 +229,6 @@
       document.documentElement.setAttribute("data-theme", savedTheme);
     })();
 
-    // Redirect after successful form submit
     document.getElementById("messageForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
